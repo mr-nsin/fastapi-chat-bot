@@ -7,9 +7,11 @@ from fastapi.staticfiles import StaticFiles
 template = Jinja2Templates(directory="templates")
 app = FastAPI()
 
+app.mount('/static', StaticFiles(directory="static"), name="static")
+
 @app.get("/")
 async def get(request: Request):
-    return template.TemplateResponse("index.html", {"request": request})
+    return template.TemplateResponse("index.html", {"request": request, 'title': 'Chat app 1'})
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
